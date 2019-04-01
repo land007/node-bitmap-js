@@ -1,0 +1,24 @@
+{
+  "name": "bitmaps",
+  "version": "1.0.0",
+  "description": "bitmap",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/land007/node-bitmap-js.git"
+  },
+  "keywords": [
+    "bitmap"
+  ],
+  "author": "land007",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/land007/node-bitmap-js/issues"
+  },
+  "homepage": "https://github.com/land007/node-bitmap-js#readme",
+  "dependencies": {
+  }
+}
