@@ -1,4 +1,4 @@
-const fs = require("fs");
+var fs = require("fs");
 
 function padImageData({ unpaddedImageData, width, height }) {
   const colorValuesPerRow = unpaddedImageData.length / height;
@@ -104,6 +104,37 @@ function createBitmapFile({
   });
 }
 
+function createBitmap({
+  filename,
+  imageData,
+  width,
+  height,
+  bitsPerPixel,
+  colorTable = Buffer.alloc(0)
+}) {
+    const imageDataOffset = 54 + colorTable.length;
+    const filesize = imageDataOffset + imageData.length;
+    let fileContent = Buffer.alloc(filesize);
+    let fileHeader = bitmapFileHeader({
+      filesize,
+      imageDataOffset
+    });
+    fileHeader.copy(fileContent);
+    dibHeader({
+      width,
+      height,
+      bitsPerPixel,
+      bitmapDataSize: imageData.length,
+      numberOfColorsInPalette: colorTable.length / 4
+    }).copy(fileContent, 14);
+
+    colorTable.copy(fileContent, 54);
+
+    imageData.copy(fileContent, imageDataOffset);
+
+    return fileContent;
+}
+
 function readBitmapFileHeader(filedata) {
   return {
     filesize: filedata.readInt32LE(2),
@@ -185,6 +216,7 @@ module.exports = {
   readDibHeader,
   dibHeader,
   createBitmapFile,
+  createBitmap,
   readBitmapFile,
   readColorTable
 };
