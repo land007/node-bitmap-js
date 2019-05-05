@@ -2,7 +2,10 @@ var fs = require("fs");
 
 function padImageData({ unpaddedImageData, width, height }) {
   const colorValuesPerRow = unpaddedImageData.length / height;
-  const padding = 4 - colorValuesPerRow % 4;
+  var padding = 4 - colorValuesPerRow % 4;
+  if(padding == 4) {
+	padding = 0;
+  }
   const unpaddedRowLength = colorValuesPerRow;
   const paddedRowLength = colorValuesPerRow + padding;
   const padded = Buffer.alloc(paddedRowLength * height);
